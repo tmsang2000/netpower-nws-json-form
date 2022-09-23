@@ -193,3 +193,56 @@ describe("Test 14", () => {
     );
   });
 });
+
+describe("Test 15", () => {
+  test("Input with order", () => {
+    render(
+      <FormInput 
+        id="test"
+        name="test"
+        type="number"
+        inputOrder="reverse"
+      />
+    );
+  });
+});
+
+describe("Test 16", () => {
+  test("Input with invalid order", () => {
+    render(
+      <FormInput 
+        id="test"
+        name="test"
+        type="number"
+        inputOrder="abc"
+      />
+    );
+  });
+});
+
+describe("Test 17", () => {
+  test("Textarea", () => {
+    render(
+      <FormInput 
+        id="test"
+        name="test"
+        type="textarea"
+      />
+    );
+  });
+});
+
+describe("Test 18", () => {
+  test("Textarea with inputProps", () => {
+    render(
+      <FormInput 
+        id="test"
+        name="test"
+        type="textarea"
+        inputProps={{
+          maxLength: 10
+        }}
+      />
+    );
+  });
+});

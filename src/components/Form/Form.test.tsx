@@ -43,12 +43,18 @@ const testFormData = {
         {
           id: 'input 2.1',
           name: 'input-2.1',
-          label: 'Input 2.1'
+          label: 'Input 2.1',
+          inputOrder: 'reverse',
+          type: 'textarea',
+          align: 'row'
         },
         {
           id: 'input 2.2',
           name: 'input-2.2',
-          label: 'Input 2.2'
+          label: 'Input 2.2',
+          inputProps: {
+            maxLength: 10
+          }
         },
       ]
     },
@@ -59,7 +65,9 @@ const testFormData = {
         {
           id: 'input 3.1',
           name: 'input-3.1',
-          label: 'Input 3.1'
+          label: 'Input 3.1',
+          type: 'checkbox',
+          align: 'row'
         },
       ]
     },

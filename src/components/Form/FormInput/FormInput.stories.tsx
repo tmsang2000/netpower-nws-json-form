@@ -17,7 +17,14 @@ export const TestFormInput = () => {
   }
 
   return (
-    <div>
+    <div 
+      style={{
+        width: '320px',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '20px'
+      }}
+    >
       <FormInput
         id="test"
         name="form-input-text"
@@ -45,8 +52,22 @@ export const TestFormInput = () => {
         id="test"
         name="form-input-checkbox"
         label="Form Input Checkbox"
+        type="checkbox"
+        align="row"
+        inputOrder="reverse"
         formValue={value}
         onChange={onValueChange}
+      />
+      <FormInput
+        id="test"
+        name="form-input-textarea"
+        label="Form Input Textarea"
+        type="textarea"
+        formValue={value}
+        onChange={onValueChange}
+        inputProps={{
+          maxLength: 20
+        }}
       />
     </div>
   )

@@ -21,8 +21,11 @@ const FormSection = (props: FormSectionProps) => {
   } = props;
 
   return (
-    <div key={id}>
-      <h3> {title} </h3>
+    <div 
+      key={id}
+      className="form-section"
+    >
+      <p className="form-section-label"> {title} </p>
       {input && input.map((inputBlock: FormInputProps) => (
         <FormInput 
           key={inputBlock.id}

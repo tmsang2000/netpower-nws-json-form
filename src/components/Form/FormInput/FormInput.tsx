@@ -5,17 +5,20 @@ export interface FormInputProps {
   id: string,
   name: string,
   label?: string,
-  type?: "text" | "number" | "checkbox",
+  type?: "text" | "number" | "checkbox" | "textarea",
   align?: "row" | "column",
   formValue?: any,
   onChange?: (e: any) => void,
-  inputProps?: any
+  inputProps?: any,
+  inputOrder?: 'default' | 'reverse'
 }
 
-const inputType = ["text", "number", "checkbox"];
+const inputType = ["text", "number", "checkbox", "textarea"];
 const defaultInputType = "text";
 const inputAlign = ["row", "column"];
-const defaultInputAlign = "column"
+const defaultInputAlign = "column";
+const inputOrderType = ["default", "reverse"];
+const defaultInputOrder = "default"
 
 const FormInput = (props: FormInputProps) => {
   const { 
@@ -26,12 +29,17 @@ const FormInput = (props: FormInputProps) => {
     align = defaultInputAlign,
     formValue,
     onChange,
-    inputProps
+    inputProps,
+    inputOrder
   } = props;
+  const inputTypeProps = type && inputType.includes(type) 
+                      ? type : defaultInputType
   const alignment = align && inputAlign.includes(align) 
                       ? align : defaultInputAlign;
   const otherInputProps = typeof inputProps === 'object' 
-                            ? inputProps : {}
+                            ? inputProps : {};
+  const inputOrderProps = inputOrder && inputOrderType.includes(inputOrder)
+                            ? inputOrder : defaultInputOrder;
 
   const onInputChange = (e: any) => {
     if (!formValue || !onChange) return;
@@ -54,17 +62,45 @@ const FormInput = (props: FormInputProps) => {
       }
     >
       {label && (
-        <p className="form-input-label"> 
+        <p 
+          className="form-input-label"
+          style={{
+            order: inputOrderProps === 'default' ? 1 : 2
+          }}
+        > 
           {label} 
         </p>
       )}
-      <input 
-        id={id}
-        name={name}
-        type={type && inputType.includes(type) ? type : defaultInputType}
-        onChange={onInputChange}
-        {...otherInputProps}
-      />
+      {inputTypeProps === 'textarea'
+        ? (
+          <textarea 
+            id={id}
+            name={name}
+            className="form-input"
+            type={inputTypeProps}
+            onChange={onInputChange}
+            style={{
+              order: inputOrderProps === 'default' ? 2 : 1
+            }}
+            {...otherInputProps}
+          />
+        )
+        : (
+          <input 
+            id={id}
+            name={name}
+            className="form-input"
+            type={inputTypeProps}
+            onChange={onInputChange}
+            style={{
+              order: inputOrderProps === 'default' ? 2 : 1,
+              width: inputTypeProps === 'checkbox' ? 'fit-content' : 'auto'
+            }}
+            {...otherInputProps}
+          />
+        )
+      }
+      
     </div>
   );
 };
