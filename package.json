@@ -3,7 +3,7 @@
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/tmsang2000"
   },
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "An simple implementation for building a React component library",
   "scripts": {
     "rollup": "rollup -c",

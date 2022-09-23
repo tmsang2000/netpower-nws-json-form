@@ -1,5 +1,5 @@
 import React from "react";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
+import { ComponentMeta } from "@storybook/react";
 import FormInput from "./FormInput";
 
 export default {
@@ -7,35 +7,47 @@ export default {
   component: FormInput,
 } as ComponentMeta<typeof FormInput>;
 
-const Template: ComponentStory<typeof FormInput> = (args) => <FormInput {...args} />;
+export const TestFormInput = () => {
+  const [value, setValue] = React.useState({});
 
-export const FormInputText = Template.bind({});
-FormInputText.args = {
-  id: "test",
-  name: "form-input-text",
-  label: "Form Input Text",
-};
+  const onValueChange = (newValue: any) => {
+    console.log("Current form", value);
+    setValue(newValue);
+    console.log("Updated form: ", newValue);
+  }
 
-export const FormInputNumber = Template.bind({});
-FormInputNumber.args = {
-  id: "test",
-  name: "form-input-number",
-  label: "Form Input Number",
-  type: "number"
-};
-
-export const FormInputCheckbox = Template.bind({});
-FormInputCheckbox.args = {
-  id: "test",
-  name: "form-input-checkbox",
-  label: "Form Input Checkbox",
-  type: "checkbox"
-};
-
-export const FormInputInvalid = Template.bind({});
-FormInputInvalid.args = {
-  id: "test",
-  name: "form-input-checkbox",
-  label: "Form Input Checkbox",
-  type: "aa"
-};
+  return (
+    <div>
+      <FormInput
+        id="test"
+        name="form-input-text"
+        label="Form Input Text"
+        formValue={value}
+        onChange={onValueChange}
+        inputProps={{
+          maxLength: 10
+        }}
+      />
+      <FormInput
+        id="test"
+        name="form-input-number"
+        label="Form Input Number"
+        type="number"
+        formValue={value}
+        onChange={onValueChange}
+        align="row"
+        inputProps={{
+          max: 10,
+          min: 5
+        }}
+      />
+      <FormInput
+        id="test"
+        name="form-input-checkbox"
+        label="Form Input Checkbox"
+        formValue={value}
+        onChange={onValueChange}
+      />
+    </div>
+  )
+}

@@ -1,79 +1,118 @@
 import React from "react";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
+import { ComponentMeta } from "@storybook/react";
 import Form from "./Form";
 import { useRef } from "@storybook/addons";
 
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: "ReactComponentLibrary/Form",
   component: Form,
 } as ComponentMeta<typeof Form>;
 
 export const TestForm = () => {
-  const myRef = useRef<any>(null);
+  const testFormData = JSON.stringify({
+    label: 'Test form',
+    section: [
+      {
+        title: 'Personal information',
+        input: [
+          {
+            id: 'name',
+            name: 'name',
+            label: 'Name',
+            inputProps: {
+              maxLength: 10,
+              abc: 123
+            }
+          },
+          {
+            id: 'email',
+            name: 'email',
+            label: 'Email'
+          },
+          {
+            id: 'phone',
+            name: 'phone',
+            label: 'Phone'
+          },
+        ]
+      },
+      {
+        title: 'Work status',
+        input: [
+          {
+            id: 'job',
+            name: 'job',
+            label: 'Job'
+          },
+          {
+            id: 'year_experience',
+            name: 'year_experience',
+            label: 'Years experience',
+            type: 'number',
+            inputProps: {
+              min: 0,
+              max: 10,
+              step: 2
+            },
+            align: 'row'
+          },
+        ]
+      },
+      {
+        title: 'Marriage',
+        input: [
+          {
+            id: 'marriage_status',
+            name: 'marriage_status',
+            label: 'Marriage status',
+            type: 'checkbox',
+            align: 'row'
+          },
+        ]
+      },
+    ]
+  })
+  const inputField = [
+    "name",
+    "email",
+    "phone",
+    "job",
+    "year_experience",
+    "marriage_status"
+  ]
+
+  const myRef: any = useRef(null);
+  const [formValue, setFormValue] = React.useState({});
+
+  const onSubmitForm1 = () => {
+    const inputData: any = {};
+    inputField.map((label: string) => {
+      inputData[label] = myRef.current[label].value;
+    })
+    console.log("Form 1 Value: ", inputData);
+  }
+
+  const onSubmitForm2 = () => {
+    console.log("Form 2 Value: ", formValue);
+  }
 
   return (
     <div>
       <Form
-        id="test-form"
-        formData={JSON.stringify({
-          label: 'Test form',
-          section: [
-            {
-              title: 'Section 1',
-              input: [
-                {
-                  id: 'input 1.1',
-                  name: 'input1a',
-                  label: 'Input 1.1'
-                },
-                {
-                  id: 'input 1.2',
-                  name: 'input1b',
-                  label: 'Input 1.2'
-                },
-                {
-                  id: 'input 1.3',
-                  name: 'input1c',
-                  label: 'Input 1.3'
-                },
-              ]
-            },
-            {
-              title: 'Section 2',
-              input: [
-                {
-                  id: 'input 2.1',
-                  name: 'input2a',
-                  label: 'Input 2.1'
-                },
-                {
-                  id: 'input 2.2',
-                  name: 'input2b',
-                  label: 'Input 2.2'
-                },
-              ]
-            },
-            {
-              title: 'Section 3',
-              input: [
-                {
-                  id: 'input 3.1',
-                  name: 'input3a',
-                  label: 'Input 3.1'
-                },
-              ]
-            },
-          ]
-        })}
-        // formOutput={myRef}
+        id="test-form-1"
+        formData={testFormData}
+        formOutput={myRef}
+        formValue={formValue}
+        onChange={setFormValue}
       />
       <button 
         onClick={(e) => {
-          console.log("My ref: ", myRef.current?.input1a?.value);
-        }}> 
-          Submit 
-        </button>
+          onSubmitForm1();
+          onSubmitForm2();
+        }}
+      > 
+        Submit 
+      </button>
     </div>
   )
 }

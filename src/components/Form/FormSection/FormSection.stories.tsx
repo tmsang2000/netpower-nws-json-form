@@ -8,31 +8,48 @@ export default {
   component: FormSection,
 } as ComponentMeta<typeof FormSection>;
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof FormSection> = (args) => <FormSection {...args} />;
+export const TestFormSection = () => {
+  const [value, setValue] = React.useState({});
 
-export const FormSectionTest = Template.bind({});
-// More on args: https://storybook.js.org/docs/react/writing-stories/args
-FormSectionTest.args = {
-  title: "Test section 1",
-  id: "test-section-1",
-  input: [
-    {
-      id: 'input 1.1',
-      name: 'input-1.1',
-      label: 'Input 1.1',
-    },
-    {
-      id: 'input 1.2',
-      name: 'input-1.2',
-      label: 'Input 1.2',
-      type: 'number'
-    },
-    {
-      id: 'input 1.3',
-      name: 'input-1.3',
-      label: 'Input 1.3',
-      type: 'checkbox'
-    },
-  ]
-};
+  const onValueChange = (newValue: any) => {
+    console.log("Current form", value);
+    setValue(newValue);
+    console.log("Updated form: ", newValue);
+  }
+
+  return (
+    <FormSection
+      title="Test"
+      id="test"
+      input={[
+        {
+          id: 'test1',
+          name: 'test1',
+          label: 'test1',
+          inputProps: {
+            maxLength: 10,
+            adasd: 2321
+          }
+        },
+        {
+          id: 'test2',
+          name: 'test2',
+          label: 'test2',
+          type: 'number',
+          inputProps: {
+            min: 5,
+            max: 10
+          }
+        },
+        {
+          id: 'test3',
+          name: 'test3',
+          label: 'test3',
+          type: 'checkbox'
+        },
+      ]}
+      formValue={value}
+      onChange={onValueChange}
+    />
+  )
+}

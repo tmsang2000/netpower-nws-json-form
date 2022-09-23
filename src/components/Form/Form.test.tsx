@@ -1,5 +1,5 @@
-import React, { ReactElement, useRef } from "react";
-import { render, renderHook } from "@testing-library/react";
+import React from "react";
+import { render } from "@testing-library/react";
 import Form from "./Form";
 
 const testFormData = {
@@ -12,13 +12,21 @@ const testFormData = {
         {
           id: 'input 1.1',
           name: 'input-1.1',
-          label: 'Input 1.1'
+          label: 'Input 1.1',
+          inputProps: {
+            maxLength: 10
+          }
         },
         {
           id: 'input 1.2',
           name: 'input-1.2',
           label: 'Input 1.2',
-          type: 'number'
+          type: 'number',
+          inputProps: {
+            min: 5,
+            max: 10,
+            step: 2
+          }
         },
         {
           id: 'input 1.3',
@@ -59,7 +67,7 @@ const testFormData = {
 }
 
 describe("Test 1", () => {
-  test("Render Form with no formOutput", () => {
+  test("Render uncontrolled form", () => {
     render(
       <Form 
         id="test-form" 
@@ -70,7 +78,7 @@ describe("Test 1", () => {
 });
 
 describe("Test 2", () => {
-  test("Render Form with formOutput", () => {
+  test("Render uncontrolled Form with formOutput", () => {
     const myRef = React.createRef<any>();
 
     render(
@@ -79,6 +87,39 @@ describe("Test 2", () => {
         formData={JSON.stringify(testFormData)} 
         formOutput={myRef}
       />
+    );
+  });
+});
+
+describe("Test 3", () => {
+  test("Render Controlled Form", () => {
+    class FormContainer extends React.Component {
+      myRef = React.createRef<any>();
+      state = {
+        value: {},
+      }
+      
+      onChange = (newValue: any) => {
+        this.setState({
+          newValue,
+        })
+      }
+      
+      render() {
+        return (
+          <Form 
+            id="test"
+            formData={JSON.stringify(testFormData)}
+            formOutput={this.myRef}
+            formValue={this.state.value}
+            onChange={this.onChange}
+          />
+        );
+      }
+    }
+
+    render(
+      <FormContainer />
     );
   });
 });

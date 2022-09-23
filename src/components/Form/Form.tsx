@@ -7,6 +7,8 @@ export interface FormProps {
   id: string,
   formData: string;
   formOutput?: LegacyRef<HTMLFormElement>;
+  formValue?: any,
+  onChange?: (value: any) => void,
 }
 
 export interface FormData {
@@ -15,7 +17,13 @@ export interface FormData {
 }
 
 const Form = (props: FormProps) => {
-  const { id, formData, formOutput } = props;
+  const { 
+    id, 
+    formData, 
+    formOutput,
+    formValue,
+    onChange,
+  } = props;
   const data: FormData = JSON.parse(formData);
 
   return (
@@ -26,7 +34,12 @@ const Form = (props: FormProps) => {
     >
       <h1> {data.label} </h1>
       {data.section.map((section: FormSectionProps) => (
-        <FormSection key={section.id} {...section}/>
+        <FormSection 
+          key={section.id}
+          formValue={formValue}
+          onChange={onChange} 
+          {...section}
+        />
       ))}
     </form>
   );
