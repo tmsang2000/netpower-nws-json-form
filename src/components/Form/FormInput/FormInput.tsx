@@ -36,7 +36,11 @@ const FormInput = (props: FormInputProps) => {
   const onInputChange = (e: any) => {
     if (!formValue || !onChange) return;
     const newState: any = { ...formValue };
-    newState[name] = e.target.value;
+    const value = type === 
+      'checkbox' 
+        ? e.target.checked 
+        : e.target.value;
+    newState[name] = value;
     onChange(newState);
   }
 
