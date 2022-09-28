@@ -4,70 +4,55 @@ import Form from "./Form";
 
 const testFormData = {
   label: 'Test form',
-  section: [
+  formFields: [
     {
-      id: "section-1",
-      title: 'Section 1',
-      input: [
+      id: 'input-1',
+      name: 'input-1',
+      label: 'Input 1',
+      inputProps: {
+        maxLength: 10
+      }
+    },
+    {
+      id: 'input-2',
+      name: 'input-2',
+      label: 'Input 2',
+      type: 'checkbox',
+    },
+    {
+      id: 'input-3',
+      name: 'input-3',
+      label: 'Input 3',
+      type: 'checkbox',
+      options: [
         {
-          id: 'input 1.1',
-          name: 'input-1.1',
-          label: 'Input 1.1',
-          inputProps: {
-            maxLength: 10
+          name: 'option-1',
+          label: 'Option 1',
+          optionProps: {
+            disabled: true
           }
         },
         {
-          id: 'input 1.2',
-          name: 'input-1.2',
-          label: 'Input 1.2',
-          type: 'number',
-          inputProps: {
-            min: 5,
-            max: 10,
-            step: 2
-          }
-        },
-        {
-          id: 'input 1.3',
-          name: 'input-1.3',
-          label: 'Input 1.3',
-          type: 'checkbox'
+          name: 'option-2',
+          label: 'Option 2',
         },
       ]
     },
     {
-      id: "section-2",
-      title: 'Section 2',
-      input: [
+      id: 'input-4',
+      name: 'input-4',
+      label: 'Input 4',
+      type: 'radio',
+      options: [
         {
-          id: 'input 2.1',
-          name: 'input-2.1',
-          label: 'Input 2.1',
-          inputOrder: 'reverse',
-          type: 'textarea',
-          align: 'row'
+          name: 'option-1',
+          label: 'Option 1',
+          value: 'option-1'
         },
         {
-          id: 'input 2.2',
-          name: 'input-2.2',
-          label: 'Input 2.2',
-          inputProps: {
-            maxLength: 10
-          }
-        },
-      ]
-    },
-    {
-      id: "section-3",
-      title: 'Section 3',
-      input: [
-        {
-          id: 'input 3.1',
-          name: 'input-3.1',
-          label: 'Input 3.1',
-          type: 'checkbox',
-          align: 'row'
+          name: 'option-2',
+          label: 'Option 2',
+          value: 'option-2'
         },
       ]
     },
@@ -75,10 +60,9 @@ const testFormData = {
 }
 
 describe("Test 1", () => {
-  test("Render uncontrolled form", () => {
+  test("Render form", () => {
     render(
       <Form 
-        id="test-form" 
         formData={JSON.stringify(testFormData)} 
       />
     );
@@ -86,23 +70,58 @@ describe("Test 1", () => {
 });
 
 describe("Test 2", () => {
-  test("Render uncontrolled Form with formOutput", () => {
-    const myRef = React.createRef<any>();
-
+  test("Render with formProps", () => {
     render(
       <Form 
-        id="test-form" 
         formData={JSON.stringify(testFormData)} 
-        formOutput={myRef}
+        formProps={{
+          style: {
+            marginTop: 10
+          }
+        }}
       />
     );
   });
 });
 
 describe("Test 3", () => {
+  test("Render with invalid formProps", () => {
+    render(
+      <Form 
+        formData={JSON.stringify(testFormData)} 
+        formProps={'abc'}
+      />
+    );
+  });
+});
+
+describe("Test 4", () => {
+  test("Render with titleStyles", () => {
+    render(
+      <Form 
+        formData={JSON.stringify(testFormData)} 
+        titleStyles={{
+          fontSize: '40px'
+        }}
+      />
+    );
+  });
+});
+
+describe("Test 5", () => {
+  test("Render with invalid titleStyles", () => {
+    render(
+      <Form 
+        formData={JSON.stringify(testFormData)} 
+        titleStyles={123}
+      />
+    );
+  });
+});
+
+describe("Test 6", () => {
   test("Render Controlled Form", () => {
     class FormContainer extends React.Component {
-      myRef = React.createRef<any>();
       state = {
         value: {},
       }
@@ -116,11 +135,17 @@ describe("Test 3", () => {
       render() {
         return (
           <Form 
-            id="test"
             formData={JSON.stringify(testFormData)}
-            formOutput={this.myRef}
             formValue={this.state.value}
             onChange={this.onChange}
+            titleStyles={{
+              fontSize: '40px'
+            }}
+            formProps={{
+              style: {
+                marginTop: 10
+              }
+            }}
           />
         );
       }

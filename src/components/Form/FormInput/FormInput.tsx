@@ -1,24 +1,35 @@
 import React from "react";
-import "./FormInput.scss";
+import { 
+  Checkbox,
+  FormControl, 
+  FormControlLabel, 
+  FormGroup, 
+  FormLabel, 
+  Radio, 
+  RadioGroup, 
+  TextField 
+} from '@mui/material';
 
 export interface FormInputProps {
   id: string,
   name: string,
   label?: string,
-  type?: "text" | "number" | "checkbox" | "textarea",
-  align?: "row" | "column",
+  type?: "input" | "checkbox" | "radio",
   formValue?: any,
   onChange?: (e: any) => void,
   inputProps?: any,
-  inputOrder?: 'default' | 'reverse'
+  options?: FormInputOptionProps[]
 }
 
-const inputType = ["text", "number", "checkbox", "textarea"];
-const defaultInputType = "text";
-const inputAlign = ["row", "column"];
-const defaultInputAlign = "column";
-const inputOrderType = ["default", "reverse"];
-const defaultInputOrder = "default"
+export interface FormInputOptionProps {
+  name: string,
+  label: string,
+  value?: string,
+  optionProps?: any,
+}
+
+const inputType = ["input", "checkbox", "radio"];
+const defaultInputType = "input";
 
 const FormInput = (props: FormInputProps) => {
   const { 
@@ -26,82 +37,143 @@ const FormInput = (props: FormInputProps) => {
     name, 
     label, 
     type = defaultInputType, 
-    align = defaultInputAlign,
     formValue,
     onChange,
     inputProps,
-    inputOrder
+    options
   } = props;
   const inputTypeProps = type && inputType.includes(type) 
                       ? type : defaultInputType
-  const alignment = align && inputAlign.includes(align) 
-                      ? align : defaultInputAlign;
   const otherInputProps = typeof inputProps === 'object' 
                             ? inputProps : {};
-  const inputOrderProps = inputOrder && inputOrderType.includes(inputOrder)
-                            ? inputOrder : defaultInputOrder;
 
-  const onInputChange = (e: any) => {
+  const onInputChange = (e: any, optionName?: string) => {
     if (!formValue || !onChange) return;
     const newState: any = { ...formValue };
     const value = type === 
       'checkbox' 
         ? e.target.checked 
         : e.target.value;
-    newState[name] = value;
+    if (inputTypeProps === 'checkbox' && optionName) {
+      if (typeof newState[name] === 'undefined')
+        newState[name] = {};
+      newState[name][optionName] = value;
+    } else {
+      newState[name] = value;
+    }
     onChange(newState);
   }
 
-  return (
-    <div 
-      key={id}
-      className={
-        alignment === 'row' 
-          ? 'form-input-align-row' 
-          : 'form-input-align-column'
-      }
-    >
-      {label && (
-        <p 
-          className="form-input-label"
-          style={{
-            order: inputOrderProps === 'default' ? 1 : 2
-          }}
-        > 
-          {label} 
-        </p>
-      )}
-      {inputTypeProps === 'textarea'
-        ? (
-          <textarea 
-            id={id}
-            name={name}
-            className="form-input"
-            type={inputTypeProps}
-            onChange={onInputChange}
-            style={{
-              order: inputOrderProps === 'default' ? 2 : 1
-            }}
-            {...otherInputProps}
-          />
-        )
-        : (
-          <input 
-            id={id}
-            name={name}
-            className="form-input"
-            type={inputTypeProps}
-            onChange={onInputChange}
-            style={{
-              order: inputOrderProps === 'default' ? 2 : 1,
-              width: inputTypeProps === 'checkbox' ? 'fit-content' : 'auto'
-            }}
-            {...otherInputProps}
-          />
-        )
+  const getDefaultValue = (optionName?: string) => {
+    let defaultValue = undefined;
+    if (formValue !== undefined) {
+      if (optionName) {
+        defaultValue = formValue[name] && formValue[name][optionName] != undefined 
+          ? formValue[name][optionName]
+          : false
+      } else {
+        let defaultInputValue: any = '';
+        if (inputTypeProps === 'checkbox') defaultInputValue = false;
+        defaultValue = formValue[name] ? formValue[name] : defaultInputValue;
       }
       
-    </div>
+    }
+    return defaultValue;
+  }
+
+  if (inputTypeProps === 'checkbox') {
+    if (!options) {
+      return (
+        <FormControlLabel
+          id={id}
+          label={label}
+          control={
+            <Checkbox 
+              checked={getDefaultValue()}
+              name={name}
+              onChange={(e: any) => {
+                onInputChange(e);
+              }}
+            />
+          }
+          {...otherInputProps}
+        /> 
+      )
+    }
+    return (
+      <FormControl id={id}>
+        <FormLabel> {label} </FormLabel>
+        {options.length > 0 && (
+          <FormGroup {...otherInputProps}>
+            {options?.map(
+              (item: FormInputOptionProps, index: number) => {
+                const otherOptionProps = typeof item.optionProps === 'object'
+                                          ? item.optionProps
+                                          : {}
+                return (
+                  <FormControlLabel
+                    key={index}
+                    label={item.label}
+                    control={
+                      <Checkbox 
+                        checked={getDefaultValue(item.name)}
+                        name={item.name}
+                        onChange={(e: any) => {
+                          onInputChange(e, item.name);
+                        }}
+                      />
+                    }
+                    {...otherOptionProps}
+                  />  
+                )
+              })}
+          </FormGroup>
+        )}
+      </FormControl>
+    )
+  }
+
+  if (inputTypeProps === 'radio') {
+    if (!options || options.length < 1) return null;
+    return (
+      <FormControl id={id}>
+        <FormLabel> {label} </FormLabel>
+        <RadioGroup 
+          value={getDefaultValue()}
+          onChange={(e: any) => {
+            onInputChange(e)
+          }}
+          {...otherInputProps}
+        >
+          {options?.map(
+            (item: FormInputOptionProps, index: number) => {
+              const otherOptionProps = typeof item.optionProps === 'object'
+                                        ? item.optionProps
+                                        : {}
+              return (
+                <FormControlLabel
+                  key={index}
+                  label={item.label}
+                  control={<Radio />}
+                  value={item.value}
+                  {...otherOptionProps}
+                />  
+              )
+          })}
+        </RadioGroup>
+      </FormControl>
+    )
+  }
+
+  return (
+    <TextField 
+      id={id}
+      value={getDefaultValue()}
+      name={name}
+      onChange={onInputChange}
+      label={label}
+      {...otherInputProps}
+    />
   );
 };
 

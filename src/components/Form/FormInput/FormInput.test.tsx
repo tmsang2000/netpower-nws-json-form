@@ -48,20 +48,7 @@ describe("Test 2", () => {
 });
 
 describe("Test 3", () => {
-  test("Input type number", () => {
-    render(
-      <FormInput 
-        id="test"
-        name="test"
-        label="test"
-        type="number"
-      />
-    );
-  });
-});
-
-describe("Test 4", () => {
-  test("Input type checkbox", () => {
+  test("Input type checkbox with no options", () => {
     render(
       <FormInput 
         id="test"
@@ -73,18 +60,68 @@ describe("Test 4", () => {
   });
 });
 
-describe("Test 5", () => {
-  test("Input with no label", () => {
+describe("Test 4", () => {
+  test("Input type checkbox with options", () => {
     render(
       <FormInput 
         id="test"
         name="test"
+        label="test"
+        type="checkbox"
+        options={[
+          {
+            name: 'test1',
+            label: 'Test 1'
+          },
+          {
+            name: 'test2',
+            label: 'Test 2'
+          }
+        ]}
+      />
+    );
+  });
+});
+
+describe("Test 5", () => {
+  test("Input type checkbox with options & optionProps", () => {
+    render(
+      <FormInput 
+        id="test"
+        name="test"
+        label="test"
+        type="checkbox"
+        options={[
+          {
+            name: 'test1',
+            label: 'Test 1',
+            optionProps: {
+              disabled: true
+            }
+          },
+        ]}
       />
     );
   });
 });
 
 describe("Test 6", () => {
+  test("Input type checkbox with no options & inputProps", () => {
+    render(
+      <FormInput 
+        id="test"
+        name="test"
+        label="test"
+        type="checkbox"
+        inputProps={{
+          disabled: true
+        }}
+      />
+    );
+  });
+});
+
+describe("Test 7", () => {
   test("Input with empty id and name", () => {
     render(
       <FormInput 
@@ -95,7 +132,7 @@ describe("Test 6", () => {
   });
 });
 
-describe("Test 7", () => {
+describe("Test 8", () => {
   test("Input with no id and name", () => {
     render(
       <FormInput />
@@ -103,7 +140,7 @@ describe("Test 7", () => {
   });
 });
 
-describe("Test 8", () => {
+describe("Test 9", () => {
   test("Input with wrong type props", () => {
     render(
       <FormInput 
@@ -115,67 +152,102 @@ describe("Test 8", () => {
   });
 });
 
-describe("Test 9", () => {
-  test("Input with align row", () => {
-    render(
-      <FormInput 
-        id="test"
-        name="test"
-        align="row"
-      />
-    );
-  });
-});
-
 describe("Test 10", () => {
-  test("Input with wrong alignment", () => {
+  test("Input type radio", () => {
     render(
       <FormInput 
         id="test"
         name="test"
-        align="aaa"
+        label="test"
+        type="radio"
+        options={[
+          {
+            name: 'test1',
+            label: 'test1',
+            value: 'test1'
+          },
+          {
+            name: 'test2',
+            label: 'test2',
+            value: 'test2'
+          },
+        ]}
       />
     );
   });
 });
 
 describe("Test 11", () => {
-  test("Input with inputProps", () => {
+  test("Input type radio with optionProps", () => {
     render(
       <FormInput 
         id="test"
         name="test"
-        type="number"
-        inputProps={{
-          max: 5,
-          min: 3
-        }}
+        label="test"
+        type="radio"
+        options={[
+          {
+            name: 'test1',
+            label: 'test1',
+            value: 'test1',
+            optionProps: {
+              disabled: true
+            }
+          },
+          {
+            name: 'test2',
+            label: 'test2',
+            value: 'test2'
+          },
+        ]}
       />
     );
   });
 });
 
 describe("Test 12", () => {
-  test("Input with invalid inputProps", () => {
+  test("Input type radio with both inputProps & optionProps", () => {
     render(
       <FormInput 
         id="test"
         name="test"
-        type="number"
-        inputProps={null}
+        label="test"
+        type="radio"
+        inputProps={{
+          style: {
+            marginTop: 10
+          }
+        }}
+        options={[
+          {
+            name: 'test1',
+            label: 'test1',
+            value: 'test1',
+            optionProps: {
+              disabled: true
+            }
+          },
+          {
+            name: 'test2',
+            label: 'test2',
+            value: 'test2'
+          },
+        ]}
       />
     );
   });
 });
 
 describe("Test 13", () => {
-  test("Input with invalid inputProps", () => {
+  test("Input with inputProps", () => {
     render(
       <FormInput 
         id="test"
         name="test"
-        type="number"
-        inputProps={123123}
+        inputProps={{
+          max: 5,
+          min: 3
+        }}
       />
     );
   });
@@ -188,60 +260,146 @@ describe("Test 14", () => {
         id="test"
         name="test"
         type="number"
-        inputProps={"asdasd"}
+        inputProps={null}
       />
     );
   });
 });
 
 describe("Test 15", () => {
-  test("Input with order", () => {
+  test("Input with invalid inputProps", () => {
     render(
       <FormInput 
         id="test"
         name="test"
         type="number"
-        inputOrder="reverse"
+        inputProps={123123}
       />
     );
   });
 });
 
 describe("Test 16", () => {
-  test("Input with invalid order", () => {
+  test("Input with invalid inputProps", () => {
     render(
       <FormInput 
         id="test"
         name="test"
         type="number"
-        inputOrder="abc"
+        inputProps={"asdasd"}
       />
     );
   });
 });
 
 describe("Test 17", () => {
-  test("Textarea", () => {
+  test("Input type checkbox with invalid optionProps", () => {
     render(
       <FormInput 
         id="test"
         name="test"
-        type="textarea"
+        label="test"
+        type="radio"
+        options={[
+          {
+            name: 'test1',
+            label: 'test1',
+            value: 'test1',
+            optionProps: null
+          },
+          {
+            name: 'test2',
+            label: 'test2',
+            value: 'test2',
+            optionProps: "abc"
+          },
+        ]}
       />
     );
   });
 });
 
 describe("Test 18", () => {
-  test("Textarea with inputProps", () => {
+  test("Input type radio with no options", () => {
     render(
       <FormInput 
         id="test"
         name="test"
-        type="textarea"
-        inputProps={{
-          maxLength: 10
-        }}
+        label="test"
+        type="radio"
+      />
+    );
+  });
+});
+
+describe("Test 19", () => {
+  test("Input type checkbox with invalid option", () => {
+    render(
+      <FormInput 
+        id="test"
+        name="test"
+        label="test"
+        type="checkbox"
+        options={[
+          {
+            label: 'test1',
+          },
+          {
+            name: 'test2',
+          },
+        ]}
+      />
+    );
+  });
+});
+
+describe("Test 20", () => {
+  test("Input type radio with invalid option", () => {
+    render(
+      <FormInput 
+        id="test"
+        name="test"
+        label="test"
+        type="radio"
+        options={[
+          {
+            label: 'test1',
+          },
+          {
+            name: 'test2',
+          },
+          {
+            name: 'test2',
+            label: 'test1',
+          },
+        ]}
+      />
+    );
+  });
+});
+
+describe("Test 21", () => {
+  test("Input type checkbox with invalid optionProps", () => {
+    render(
+      <FormInput 
+        id="test"
+        name="test"
+        label="test"
+        type="checkbox"
+        options={[
+          {
+            name: 'test1',
+            label: 'test1',
+            value: 'test1',
+            optionProps: null
+          },
+          {
+            name: 'test2',
+            label: 'test2',
+            value: 'test2',
+            optionProps: "abc"
+          },
+        ]}
       />
     );
   });

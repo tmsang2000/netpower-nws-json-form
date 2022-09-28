@@ -36,38 +36,68 @@ export const TestFormInput = () => {
         }}
       />
       <FormInput
-        id="test"
-        name="form-input-number"
-        label="Form Input Number"
-        type="number"
-        formValue={value}
-        onChange={onValueChange}
-        align="row"
-        inputProps={{
-          max: 10,
-          min: 5
-        }}
-      />
-      <FormInput
-        id="test"
+        id="test1"
         name="form-input-checkbox"
         label="Form Input Checkbox"
         type="checkbox"
-        align="row"
-        inputOrder="reverse"
         formValue={value}
         onChange={onValueChange}
       />
       <FormInput
         id="test"
-        name="form-input-textarea"
-        label="Form Input Textarea"
-        type="textarea"
+        name="form-input-checkboxes"
+        label="Form Input Checkboxes"
+        type="checkbox"
+        formValue={value}
+        onChange={onValueChange}
+        options={[
+          {
+            name: 'option1',
+            label: 'Option 1',
+            optionProps: {
+              disabled: true
+            }
+          },
+          {
+            name: 'option2',
+            label: 'Option 2'
+          },
+          {
+            name: 'option3',
+            label: 'Option 3'
+          }
+        ]}
+      />
+      <FormInput
+        id="test"
+        name="form-input-radio"
+        label="Form Input Radio"
+        type="radio"
         formValue={value}
         onChange={onValueChange}
         inputProps={{
-          maxLength: 20
+          required: true
         }}
+        options={[
+          {
+            name: 'option1',
+            label: 'Option 1',
+            value: 'option1',
+            optionProps: {
+              disabled: true
+            }
+          },
+          {
+            name: 'option2',
+            label: 'Option 2',
+            value: 'option2',
+          },
+          {
+            name: 'option3',
+            label: 'Option 3',
+            value: 'option3',
+          }
+        ]}
       />
     </div>
   )

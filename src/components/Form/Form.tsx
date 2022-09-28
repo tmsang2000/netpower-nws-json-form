@@ -1,47 +1,82 @@
-import React, { LegacyRef } from "react";
-import FormSection from "./FormSection";
-import { FormSectionProps } from "./FormSection/FormSection";
-import "./Form.scss";
+import React from "react";
+import { Box, Typography } from "@mui/material";
+import FormInput, { FormInputOptionProps, FormInputProps } from "./FormInput/FormInput";
 
 export interface FormProps {
-  id: string,
   formData: string;
-  formOutput?: LegacyRef<HTMLFormElement>;
+  formProps?: Object;
   formValue?: any,
   onChange?: (value: any) => void,
+  titleStyles?: Object;
 }
 
 export interface FormData {
   label: string,
-  section: FormSectionProps[];
+  formFields: FormInputProps[];
 }
 
 const Form = (props: FormProps) => {
   const { 
-    id, 
     formData, 
-    formOutput,
+    formProps,
+    titleStyles,
     formValue,
     onChange,
   } = props;
   const data: FormData = JSON.parse(formData);
+  const boxProps = typeof formProps === 'object' 
+                    ? formProps 
+                    : {}
+  const labelStyles = typeof titleStyles === 'object'
+                        ? titleStyles
+                        : {}
+  // const isControlledForm: boolean = 
+  //   formValue != undefined 
+  //   && onChange != undefined 
+  // const [defaultFormValue, setDefaultFormValue] = 
+  //   React.useState<Object>({});
+
+  // const initFormValue = () => {
+  //   if (!data || data?.formFields?.length < 1) return;
+  //   const value: any = {};
+  //   data.formFields.map((item: FormInputProps) => {
+  //     if (!item.name) return;
+  //     if (
+  //       item.type === 'checkbox' 
+  //       && item.options
+  //       && item.options.length > 0
+  //     ) {
+  //       value[item.name] = {};
+  //       item.options.map((option: FormInputOptionProps) => {
+  //         value[item.name][option.name] = false;
+  //       })
+  //       return;
+  //     }
+  //     value[item.name] = '';
+  //   })
+  //   console.log("Default form value: ", value);
+  //   setDefaultFormValue(value);
+  // }
+
+  // React.useEffect(() => {
+  //   if (isControlledForm)
+  //     initFormValue()
+  // }, [])
 
   return (
-    <form 
-      id={id} 
-      className="form-container"
-      ref={formOutput}
-    >
-      <h1> {data.label} </h1>
-      {data.section.map((section: FormSectionProps) => (
-        <FormSection 
-          key={section.id}
-          formValue={formValue}
-          onChange={onChange} 
-          {...section}
-        />
-      ))}
-    </form>
+    <Box {...boxProps}>
+      <Typography sx={labelStyles}> {data.label} </Typography>
+      {data.formFields && data.formFields.map(
+        (field: FormInputProps) => (
+          <FormInput 
+            key={field.id}
+            formValue={formValue}
+            onChange={onChange}
+            {...field}
+          />
+        )
+      )}
+    </Box>
   );
 };
 

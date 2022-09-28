@@ -1,7 +1,6 @@
 import React from "react";
 import { ComponentMeta } from "@storybook/react";
 import Form from "./Form";
-import { useRef } from "@storybook/addons";
 
 export default {
   title: "ReactComponentLibrary/Form",
@@ -11,86 +10,64 @@ export default {
 export const TestForm = () => {
   const testFormData = JSON.stringify({
     label: 'Test form',
-    section: [
+    formFields: [
       {
-        title: 'Personal information',
-        input: [
+        id: 'input-1',
+        name: 'input-1',
+        label: 'Input 1',
+        inputProps: {
+          maxLength: 10
+        }
+      },
+      {
+        id: 'input-2',
+        name: 'input-2',
+        label: 'Input 2',
+        type: 'checkbox',
+      },
+      {
+        id: 'input-3',
+        name: 'input-3',
+        label: 'Input 3',
+        type: 'checkbox',
+        options: [
           {
-            id: 'name',
-            name: 'name',
-            label: 'Name',
-            inputProps: {
-              maxLength: 10,
-              abc: 123
+            name: 'option-1',
+            label: 'Option 1',
+            optionProps: {
+              disabled: true
             }
           },
           {
-            id: 'email',
-            name: 'email',
-            label: 'Email'
-          },
-          {
-            id: 'phone',
-            name: 'phone',
-            label: 'Phone'
+            name: 'option-2',
+            label: 'Option 2',
           },
         ]
       },
       {
-        title: 'Work status',
-        input: [
+        id: 'input-4',
+        name: 'input-4',
+        label: 'Input 4',
+        type: 'radio',
+        inputProps: {
+          required: true
+        },
+        options: [
           {
-            id: 'job',
-            name: 'job',
-            label: 'Job'
+            name: 'option-1',
+            label: 'Option 1',
+            value: 'option-1'
           },
           {
-            id: 'year_experience',
-            name: 'year_experience',
-            label: 'Years experience',
-            type: 'number',
-            inputProps: {
-              min: 0,
-              max: 10,
-              step: 2
-            },
-            align: 'row'
-          },
-        ]
-      },
-      {
-        title: 'Marriage',
-        input: [
-          {
-            id: 'marriage_status',
-            name: 'marriage_status',
-            label: 'Marriage status',
-            type: 'checkbox',
-            align: 'row'
+            name: 'option-2',
+            label: 'Option 2',
+            value: 'option-2'
           },
         ]
       },
     ]
   })
-  const inputField = [
-    "name",
-    "email",
-    "phone",
-    "job",
-    "year_experience",
-    "marriage_status"
-  ]
-
-  const myRef: any = useRef(null);
   const [formValue, setFormValue] = React.useState({});
-
-  const onSubmitForm1 = () => {
-    const inputData: any = {};
-    inputField.map((label: string) => {
-      inputData[label] = myRef.current[label].value;
-    })
-    console.log("Form 1 Value: ", inputData);
-  }
 
   const onSubmitForm2 = () => {
     console.log("Form 2 Value: ", formValue);
@@ -99,15 +76,25 @@ export const TestForm = () => {
   return (
     <div>
       <Form
-        id="test-form-1"
         formData={testFormData}
-        formOutput={myRef}
         formValue={formValue}
         onChange={setFormValue}
+        formProps={{
+          style: {
+            padding: 20,
+            border: '1px solid black',
+            display: 'flex',
+            flexDirection: 'column',
+          }
+        }}
+        titleStyles={{
+          fontSize: '20px',
+          fontWeight: 600,
+          color: 'red'
+        }}
       />
       <button 
         onClick={(e) => {
-          onSubmitForm1();
           onSubmitForm2();
         }}
       > 
