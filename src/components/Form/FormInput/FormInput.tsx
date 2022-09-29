@@ -13,6 +13,7 @@ import {
 export interface FormInputProps {
   id: string,
   name: string,
+  error?: boolean,
   label?: string,
   type?: "input" | "checkbox" | "radio",
   formValue?: any,
@@ -22,8 +23,8 @@ export interface FormInputProps {
 }
 
 export interface FormInputOptionProps {
-  name: string,
   label: string,
+  name?: string,
   value?: string,
   optionProps?: any,
 }
@@ -34,7 +35,8 @@ const defaultInputType = "input";
 const FormInput = (props: FormInputProps) => {
   const { 
     id, 
-    name, 
+    name,
+    error, 
     label, 
     type = defaultInputType, 
     formValue,
@@ -76,7 +78,6 @@ const FormInput = (props: FormInputProps) => {
         if (inputTypeProps === 'checkbox') defaultInputValue = false;
         defaultValue = formValue[name] ? formValue[name] : defaultInputValue;
       }
-      
     }
     return defaultValue;
   }
@@ -85,8 +86,8 @@ const FormInput = (props: FormInputProps) => {
     if (!options) {
       return (
         <FormControlLabel
-          id={id}
           label={label}
+          name={name}
           control={
             <Checkbox 
               checked={getDefaultValue()}
@@ -101,7 +102,7 @@ const FormInput = (props: FormInputProps) => {
       )
     }
     return (
-      <FormControl id={id}>
+      <FormControl id={id} error={error}>
         <FormLabel> {label} </FormLabel>
         {options.length > 0 && (
           <FormGroup {...otherInputProps}>
@@ -114,6 +115,7 @@ const FormInput = (props: FormInputProps) => {
                   <FormControlLabel
                     key={index}
                     label={item.label}
+                    name={item.name}
                     control={
                       <Checkbox 
                         checked={getDefaultValue(item.name)}
@@ -136,9 +138,10 @@ const FormInput = (props: FormInputProps) => {
   if (inputTypeProps === 'radio') {
     if (!options || options.length < 1) return null;
     return (
-      <FormControl id={id}>
+      <FormControl id={id} error={error}>
         <FormLabel> {label} </FormLabel>
         <RadioGroup 
+          name={name}
           value={getDefaultValue()}
           onChange={(e: any) => {
             onInputChange(e)
@@ -172,6 +175,7 @@ const FormInput = (props: FormInputProps) => {
       name={name}
       onChange={onInputChange}
       label={label}
+      error={error}
       {...otherInputProps}
     />
   );

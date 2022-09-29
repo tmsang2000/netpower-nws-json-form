@@ -1,13 +1,14 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
-import FormInput, { FormInputOptionProps, FormInputProps } from "./FormInput/FormInput";
+import FormInput, { FormInputProps } from "./FormInput/FormInput";
 
 export interface FormProps {
   formData: string;
-  formProps?: Object;
-  formValue?: any,
+  formProps?: { [index: string]: any };
+  formErrors?: { [index: string]: boolean };
+  formValue?: { [index: string]: any },
   onChange?: (value: any) => void,
-  titleStyles?: Object;
+  titleStyles?: { [index: string]: any };
 }
 
 export interface FormData {
@@ -19,6 +20,7 @@ const Form = (props: FormProps) => {
   const { 
     formData, 
     formProps,
+    formErrors,
     titleStyles,
     formValue,
     onChange,
@@ -30,38 +32,6 @@ const Form = (props: FormProps) => {
   const labelStyles = typeof titleStyles === 'object'
                         ? titleStyles
                         : {}
-  // const isControlledForm: boolean = 
-  //   formValue != undefined 
-  //   && onChange != undefined 
-  // const [defaultFormValue, setDefaultFormValue] = 
-  //   React.useState<Object>({});
-
-  // const initFormValue = () => {
-  //   if (!data || data?.formFields?.length < 1) return;
-  //   const value: any = {};
-  //   data.formFields.map((item: FormInputProps) => {
-  //     if (!item.name) return;
-  //     if (
-  //       item.type === 'checkbox' 
-  //       && item.options
-  //       && item.options.length > 0
-  //     ) {
-  //       value[item.name] = {};
-  //       item.options.map((option: FormInputOptionProps) => {
-  //         value[item.name][option.name] = false;
-  //       })
-  //       return;
-  //     }
-  //     value[item.name] = '';
-  //   })
-  //   console.log("Default form value: ", value);
-  //   setDefaultFormValue(value);
-  // }
-
-  // React.useEffect(() => {
-  //   if (isControlledForm)
-  //     initFormValue()
-  // }, [])
 
   return (
     <Box {...boxProps}>
@@ -72,6 +42,7 @@ const Form = (props: FormProps) => {
             key={field.id}
             formValue={formValue}
             onChange={onChange}
+            error={formErrors && formErrors[field.name]}
             {...field}
           />
         )

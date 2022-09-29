@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { render } from "@testing-library/react";
 import Form from "./Form";
 
@@ -109,6 +109,19 @@ describe("Test 4", () => {
 });
 
 describe("Test 5", () => {
+  test("Render with formErrors props", () => {
+    render(
+      <Form 
+        formData={JSON.stringify(testFormData)} 
+        formErrors={{
+          'input-1': true
+        }}
+      />
+    );
+  });
+});
+
+describe("Test 6", () => {
   test("Render with invalid titleStyles", () => {
     render(
       <Form 
@@ -119,7 +132,7 @@ describe("Test 5", () => {
   });
 });
 
-describe("Test 6", () => {
+describe("Test 7", () => {
   test("Render Controlled Form", () => {
     class FormContainer extends React.Component {
       state = {
@@ -153,6 +166,44 @@ describe("Test 6", () => {
 
     render(
       <FormContainer />
+    );
+  });
+});
+
+describe("Test 8", () => {
+  test("Render Uncontrolled Form", () => {
+    function FormContainer() {
+      const myRef = useRef();
+      
+      return (
+        <Form 
+          formData={JSON.stringify(testFormData)}
+          titleStyles={{
+            fontSize: '40px'
+          }}
+          formProps={{
+            ref: myRef,
+            style: {
+              marginTop: 10
+            }
+          }}
+        />
+      );
+    }
+
+    render(
+      <FormContainer />
+    );
+  });
+});
+
+describe("Test 9", () => {
+  test("Render with invalid formErrors props", () => {
+    render(
+      <Form 
+        formData={JSON.stringify(testFormData)} 
+        formErrors={12}
+      />
     );
   });
 });

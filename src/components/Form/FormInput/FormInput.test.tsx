@@ -404,3 +404,58 @@ describe("Test 21", () => {
     );
   });
 });
+
+describe("Test 22", () => {
+  test("Input with error", () => {
+    render(
+      <FormInput 
+        id="test"
+        name="test"
+        label="test"
+        type="checkbox"
+        error={true}
+      />
+    );
+  });
+});
+
+describe("Test 23", () => {
+  test("Input with invalid error", () => {
+    render(
+      <FormInput 
+        id="test"
+        name="test"
+        label="test"
+        type="checkbox"
+        error="abvc"
+      />
+    );
+  });
+});
+
+describe("Test 24", () => {
+  test("Input with invalid error", () => {
+    render(
+      <FormInput 
+        id="test"
+        name="test"
+        label="test"
+        type="checkbox"
+        error={22}
+      />
+    );
+  });
+});
+
+describe("Test 25", () => {
+  test("Input with error", () => {
+    render(
+      <FormInput 
+        id="test"
+        name="test"
+        label="test"
+        error={true}
+      />
+    );
+  });
+});

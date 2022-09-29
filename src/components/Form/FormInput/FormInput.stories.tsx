@@ -31,6 +31,7 @@ export const TestFormInput = () => {
         label="Form Input Text"
         formValue={value}
         onChange={onValueChange}
+        error={true}
         inputProps={{
           maxLength: 10
         }}
@@ -40,6 +41,7 @@ export const TestFormInput = () => {
         name="form-input-checkbox"
         label="Form Input Checkbox"
         type="checkbox"
+        error={true}
         formValue={value}
         onChange={onValueChange}
       />
@@ -50,6 +52,7 @@ export const TestFormInput = () => {
         type="checkbox"
         formValue={value}
         onChange={onValueChange}
+        error={true}
         options={[
           {
             name: 'option1',
@@ -75,6 +78,7 @@ export const TestFormInput = () => {
         type="radio"
         formValue={value}
         onChange={onValueChange}
+        error={true}
         inputProps={{
           required: true
         }}
@@ -83,9 +87,6 @@ export const TestFormInput = () => {
             name: 'option1',
             label: 'Option 1',
             value: 'option1',
-            optionProps: {
-              disabled: true
-            }
           },
           {
             name: 'option2',
