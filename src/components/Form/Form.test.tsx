@@ -207,3 +207,43 @@ describe("Test 9", () => {
     );
   });
 });
+
+describe("Test 10", () => {
+  test("Render with invalid formData", () => {
+    render(
+      <Form 
+        formData={''} 
+      />
+    );
+  });
+});
+
+describe("Test 11", () => {
+  test("Render with invalid formErrors props", () => {
+    render(
+      <Form 
+        formData={123} 
+      />
+    );
+  });
+});
+
+describe("Test 12", () => {
+  test("Render with invalid formErrors props", () => {
+    render(
+      <Form 
+        formData={'abc'} 
+      />
+    );
+  });
+});
+
+describe("Test 13", () => {
+  test("Render with invalid formErrors props", () => {
+    render(
+      <Form 
+        formData={'{abc, 123, a}'} 
+      />
+    );
+  });
+});

@@ -25,7 +25,23 @@ const Form = (props: FormProps) => {
     formValue,
     onChange,
   } = props;
-  const data: FormData = JSON.parse(formData);
+
+  if (
+    !formData
+    || typeof formData != 'string'
+  ) return null;
+
+  let data: FormData | null = null;
+
+  try {
+    data = JSON.parse(formData);
+  } catch (err) {
+    console.warn("Error while rendering Dynamic Form: ", err);
+    return null;
+  }
+
+  if (!data || typeof data != 'object') return null;
+  
   const boxProps = typeof formProps === 'object' 
                     ? formProps 
                     : {}
@@ -35,8 +51,8 @@ const Form = (props: FormProps) => {
 
   return (
     <Box {...boxProps}>
-      <Typography sx={labelStyles}> {data.label} </Typography>
-      {data.formFields && data.formFields.map(
+      <Typography sx={labelStyles}> {data?.label} </Typography>
+      {data?.formFields?.length > 0 && data.formFields.map(
         (field: FormInputProps) => (
           <FormInput 
             key={field.id}
