@@ -1,10 +1,7 @@
 {
-  "name": "@tmsang2000/tmsang2000-json-form",
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/tmsang2000"
-  },
-  "version": "1.0.1",
-  "description": "An simple implementation for building a React component library",
+  "name": "nws-json-form",
+  "version": "1.0.7",
+  "description": "An simple library for generating dynamic form with json input",
   "scripts": {
     "rollup": "rollup -c",
     "test": "jest",
@@ -69,12 +66,18 @@
     "dist"
   ],
   "types": "dist/index.d.ts",
-  "homepage": "https://github.com/tmsang2000/tmsang2000-json-form#readme",
+  "homepage": "https://github.com/tmsang2000/nws-json-form#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tmsang2000/tmsang2000-json-form.git"
+    "url": "git+https://github.com/tmsang2000/nws-json-form.git"
   },
   "bugs": {
-    "url": "https://github.com/tmsang2000/tmsang2000-json-form/issues"
-  }
+    "url": "https://github.com/tmsang2000/nws-json-form/issues"
+  },
+  "keywords": [
+    "JSON",
+    "Form",
+    "NWS",
+    "nws-json-form"
+  ]
 }

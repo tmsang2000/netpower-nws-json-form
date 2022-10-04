@@ -1,4 +1,4 @@
-# tmsang2000-json-form
+# nws-json-form
 
 # JSON Form
 
@@ -23,13 +23,13 @@ input list can be changed for different purpose. By using this library, you can 
 Use [NPM](https://www.npmjs.com/) to install the library.
 
 ``` bash
-$ npm install @tmsang2000/tmsang2000-json-form
+$ npm install nws-json-form
 ```
 
 ## Usage
 
 ```php
-import { JSONForm } from '@tmsang2000/tmsang2000-json-form';
+import { JSONForm } from 'nws-json-form';
 
 const testFormData = JSON.stringify({
   label: 'Declaration',
